@@ -4,19 +4,16 @@ import { FaGithub } from 'react-icons/fa';
 function Layout(){
     return(
         <div className="flex flex-col min-h-screen">
-            <nav className="flex flex-row justify-between text-xl border-b-2 p-4 items-center">
+            <nav className="flex flex-row items-center justify-between p-4 text-xl bg-blue-400 border-b-2">
+                <Link to="/" className="text-2xl md:text-4xl">Recipe Book</Link>
                 <Link to="/recipes">All Recipes</Link>
-
-                <Link to="/" className="text-5xl">Recipe Book</Link>
-
-                <Link to="/about">About</Link>
             </nav>
 
-            <div className="flex-grow">
+            <div className="flex-grow pb-10">
                 <Outlet />
             </div>
 
-            <footer className='flex border-t-2 justify-end content-center items-center py-2 text-center'>
+            <footer className='flex items-center content-center justify-end p-3 text-center bg-blue-400 border-t-2'>
                 <p className='m-0'>&copy; {new Date().getFullYear()} - Ramon Alvarez</p>
                 <a href="https://github.com/HeftyTie/RecipeBook" target="_blank">
                     <FaGithub className="mx-2 text-xl" />
