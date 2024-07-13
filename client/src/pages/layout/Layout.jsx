@@ -6,7 +6,7 @@ function Layout(){
         <div className="flex flex-col min-h-screen">
             <nav className="flex flex-row items-center justify-between p-4 text-xl bg-blue-400 border-b-2">
                 <Link to="/" className="text-2xl md:text-4xl">Recipe Book</Link>
-                <Link to="/recipes">All Recipes</Link>
+                <Link to="/add-recipe" className="p-2 bg-blue-600 rounded-full">Add Recipe</Link>
             </nav>
 
             <div className="flex-grow pb-10">
