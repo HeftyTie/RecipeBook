@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import RecipeCard from '@components/RecipeCard'; 
-import { recipes } from '@assets/recipesData'; 
 
 function RecipesPage(){
     const [visibleCount, setVisibleCount] = useState(20);
@@ -10,11 +9,19 @@ function RecipesPage(){
         setVisibleCount(prevCount => prevCount + 20)
     }
 
+    const recipes = [];
+    
+    if (recipes.length === 0) {
+        return(<div className="relative text-5xl text-center top-52">404 - No Recipes Found</div>);
+    }
+
     return(
-        <div className="flex flex-wrap w-11/12 gap-3 p-2 pt-10 mx-auto">
-            {recipes.slice(0, visibleCount).map((recipe, index) => (
-                <RecipeCard key={index} {...recipe} />
-            ))}
+        <div className="p-0 pt-5 mx-2 md:pt-10 md:p-2">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-4 lg:grid-cols-5">
+                {recipes.slice(0, visibleCount).map((recipe, index) => (
+                        <RecipeCard key={index} {...recipe} />
+                    ))}
+            </div>
             {visibleCount < recipes.length && (
                 <div className="w-full mt-4 text-center">
                     <button 
