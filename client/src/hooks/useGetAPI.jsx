@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useAPI = (apiUrl, method) => {
+export const useAPI = (apiUrl) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -8,7 +8,7 @@ export const useAPI = (apiUrl, method) => {
     const fetchData = async () => {
       try {
         const response = await fetch(`/api/${apiUrl}`, {
-          method: method
+          method: 'GET'
         });
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -23,7 +23,7 @@ export const useAPI = (apiUrl, method) => {
     };
 
     fetchData();
-  }, [apiUrl, method]);
+  }, [apiUrl]);
 
   return { data, loading };
 };

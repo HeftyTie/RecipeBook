@@ -34,3 +34,22 @@
     scrollbar-width: none;
   }
 }
+
+nav, footer {
+  background-color: rgb(96 165 250);
+  padding: 1rem;
+}
+
+.form-input-container input {
+  @apply p-2 border border-gray-300 rounded-md;
+}
+
+.button {
+  @apply inline-block px-4 py-2 transition duration-300 ease-in-out 
+  bg-blue-600 rounded-full shadow-md hover:bg-blue-800 hover:shadow-lg
+}
+
+.loading {
+  font-size: 3rem;
+  line-height: 1;
+}
