@@ -10,10 +10,12 @@ function Layout(){
       </nav>
 
       <div className="flex flex-col items-center justify-center flex-grow p-5">
-        <Outlet />
+        <div className="w-full">
+          <Outlet />
+        </div>
       </div>
 
-      <footer className="flex justify-end">
+      <footer className="flex items-center justify-end">
         <p>&copy; {new Date().getFullYear()} - Ramon Alvarez</p>
         <a href="https://github.com/HeftyTie/RecipeBook" target="_blank">
           <FaGithub className="mx-2 text-xl"/>

@@ -1,81 +1,33 @@
-import { CiCircleRemove } from "react-icons/ci";
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState } from "react";
 import { useFormData } from '@hooks/useFormData'
-import { useImageUpload } from '@hooks/useImageUpload'
 import { useRedirectIfEmpty } from '@hooks/useRedirectIfEmpty';
-import { useAPI } from '@hooks/useGetAPI';
 
+import { useGetRequest } from '@hooks/requests';
 import FormInput from '@components/FormInput';
 
 const AddRecipe = () => {
-  const navigate = useNavigate();
+  const { id } = useParams();
+  const { data: recipe, loading } = useGetRequest(`api/recipe/${id}`);
+
+  useRedirectIfEmpty(recipe, loading);
 
   const [equipmentInput, handleEquipment] = useState('');
   const [ingredientInput, handleIngredient] = useState('');
   const [stepInput, handleStep] = useState('');
 
-  const { id } = useParams();
-  const { data: recipeData, loading } = useAPI(`manage-recipe/${id}`, 'GET');
-
-  const { formData, setFormData, addItem, editItem, deleteItem, handleChange } = useFormData(recipeData);
-  const { handleDrop, handleImageUpload, handleRemoveImage } = useImageUpload(setFormData);
-
-  if (id) {
-    useRedirectIfEmpty(recipeData);
-  }
+  const { formData, setFormData, addItem, editItem, deleteItem, handleChange } = useFormData(recipe);
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
+  };
 
   if (loading) {
     return <p className="loading">Loading...</p>;
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); 
-    
-    let method;
-    if (id){
-      method = 'PUT'
-    } else{
-      method = 'POST'
-    }
-
-    const requestOptions = {
-      method: method,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    };
-
-    try {
-      const response = await fetch('/api/manage-recipe', requestOptions);
-      if (response.ok) {
-        navigate(`/recipe/${id}`)
-      } else {
-        alert(`Invalid Passkey`);
-      }
-    } catch (error) {
-      alert('An error occurred. Please try again.');
-    }
-  };
-  
-
   return (
     <form onSubmit={handleSubmit} className="flex flex-col items-center gap-3 form-input-container">
-      <div className="flex justify-center w-11/12 p-5" id="imageContainer" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()}>
-        <input type="file" name="image" accept="image/*" onChange={handleImageUpload} id="imageUploadInput" hidden />
-        {formData.image ? (
-          <div className="relative">
-            <CiCircleRemove className="absolute text-red-600 cursor-pointer top-1 right-1" onClick={handleRemoveImage} size={50} />
-            <img src={formData.image} alt="Uploaded Image" className="object-cover rounded-md aspect-square" width={300} height={300} />
-          </div>
-        ) : (
-          <label htmlFor="imageUploadInput" className="button">
-            Choose Image
-          </label>
-        )}
-      </div>
-
       <input className="w-10/12" type="text" name="header" value={formData.header} onChange={handleChange} placeholder="Recipe Name" />
 
       <div className="flex flex-wrap justify-center gap-2">

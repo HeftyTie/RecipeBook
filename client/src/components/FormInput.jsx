@@ -31,7 +31,7 @@ const FormInput = ({ formData, formDataName, inputValue, onInputChange, onAddIte
         <ul className="flex flex-col items-center gap-3 m-3">
           {formData.map((item, index) => (
             <li key={index} className="flex items-center gap-2">
-              {index + 1}. {item}
+              {index + 1}&#41; {item}
               <button type="button" className="button !bg-green-600 hover:!bg-green-800" onClick={() => handleEdit(index)}>Edit</button>
               <button type="button" className="button !bg-red-600 hover:!bg-red-800" onClick={() => handleDelete(index)}>Delete</button>
             </li>

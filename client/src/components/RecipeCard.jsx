@@ -1,18 +1,18 @@
 import Avatar from 'react-avatar';
 import { Link } from 'react-router-dom';
 
-function RecipeCard({ id, image, authorName, header, totalTime }) {
+function RecipeCard({ id, author, header, total_time, className}) {
   return (
-    <Link to={`/recipe/${id}`} className="w-full sm:w-1/3 md:max-w-[17rem] flex-none overflow-hidden bg-blue-400 rounded-2xl hover:bg-blue-600">
-      <img className="object-cover w-full aspect-square" src={image} alt="Recipe" />
-      <div className="relative px-2 bottom-12">
-        <div className="flex items-end">
-          <Avatar name={authorName} round={true} size={100} />
-          <p className="m-2 text-2xl line-clamp-1">{authorName}</p>
+    <Link to={`/recipe/${id}`} className={`flex-none w-full overflow-hidden bg-blue-400 hover:bg-blue-600 rounded-2xl ${className}`}>
+      <div className="relative flex flex-col gap-3 p-5">
+        <div className="flex items-center">
+          <Avatar name={author} round={true} size={75} />
+          <p className="m-2 text-xl line-clamp-2">{author}</p>
         </div>
-        <div className="relative flex flex-col justify-between h-20 mx-3 mt-2 overflow-hidden top-10">
-          <h3 className="text-xl font-bold line-clamp-2">{header}</h3>
-          <h4 className="self-start w-20 px-2 mt-1 bg-gray-600 rounded-full">{totalTime} mins</h4>
+        
+        <div className="flex flex-col justify-between min-h-24">
+          <h3 className="mb-auto text-xl font-bold line-clamp-2">{header}</h3>
+          <h4 className="w-20 px-2 bg-gray-600 rounded-full">{total_time} mins</h4>
         </div>
       </div>
     </Link>

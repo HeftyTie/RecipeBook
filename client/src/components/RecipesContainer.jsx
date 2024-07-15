@@ -5,7 +5,7 @@ import RecipeCard from '@components/RecipeCard';
 
 const RecipeContainer = ({ recipes, id }) => {
   const { scrollRef, scrollLeft, scrollRight } = useScroll(id);
-  const isHidden = recipes.length < 6 ? true : false;
+  const isHidden = recipes.length < 5 ? true : false;
 
   return (
     <div className="flex justify-center mx-auto">
@@ -13,12 +13,10 @@ const RecipeContainer = ({ recipes, id }) => {
         <FaArrowCircleLeft size={30} />
       </button>
 
-      <div className="w-11/12 mx-3 overflow-x-auto no-scrollbar" ref={scrollRef}>
-          <div className="flex gap-3">
-            {recipes.map((recipe, index) => (
-                <RecipeCard key={index}  {...recipe} />
-            ))}
-          </div>
+      <div className="flex w-11/12 gap-3 mx-3 overflow-x-auto no-scrollbar" ref={scrollRef}>
+        {recipes.map((recipe, index) => (
+          <RecipeCard key={index} {...recipe} className="sm:w-1/3 md:w-1/5" />
+        ))}
       </div>
         
       <button className={`hidden h-10 my-auto ${isHidden ? 'md:hidden' : 'md:flex'}`} onClick={scrollRight} >

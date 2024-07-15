@@ -50,6 +50,8 @@ nav, footer {
 }
 
 .loading {
+  display: flex;
+  justify-content: center;
   font-size: 3rem;
   line-height: 1;
 }

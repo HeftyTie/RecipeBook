@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useRedirectIfEmpty } from '@hooks/useRedirectIfEmpty';
-import { useAPI } from '@hooks/useGetAPI';
 
+import { useRedirectIfEmpty } from '@hooks/useRedirectIfEmpty';
+import { useGetRequest } from '@hooks/requests';
 import RecipeCard from '@components/RecipeCard'; 
 
 function RecipesPage(){
@@ -11,21 +11,21 @@ function RecipesPage(){
       setVisibleCount(prevCount => prevCount + 20)
   }
   
-  const { data: recipes, loading } = useAPI('recipes');
-
-  useRedirectIfEmpty(recipes);
+  const { data: recipes, loading } = useGetRequest('api/recipes');
+  useRedirectIfEmpty(recipes, loading);
 
   if (loading) {
     return <p className="loading">Loading...</p>;
   }
-
+  
   return(
     <>
-      <div className="flex flex-wrap justify-center gap-3">
+      <div className="grid justify-center grid-cols-2 gap-2 sm:grid-cols-4 md:grid-cols-5">
         {recipes.slice(0, visibleCount).map((recipe, index) => (
-            <RecipeCard key={index} {...recipe} />
-          ))}
+          <RecipeCard {...recipe} key={index} />
+        ))}
       </div>
+
       {visibleCount < recipes.length && (
         <div className="w-full mt-4 text-center">
           <button className="button" onClick={showMore}>
