@@ -60,6 +60,27 @@ function ManageRecipe(){
       alert(response.message);
     }
   };
+
+  const equipmentHandlers = {
+    formData: formData.equipment || [],
+    addItem: (item) => addItem('equipment', item),
+    editItem: (index, item) => editItem('equipment', index, item),
+    deleteItem: (index) => deleteItem('equipment', index)
+  };
+
+  const ingredientHandlers = {
+    formData: formData.ingredients || [],
+    addItem: (item) => addItem('ingredients', item),
+    editItem: (index, item) => editItem('ingredients', index, item),
+    deleteItem: (index) => deleteItem('ingredients', index)
+  };
+
+  const recipeHandlers = {
+    formData: formData.recipe || [],
+    addItem: (item) => addItem('recipe', item),
+    editItem: (index, item) => editItem('recipe', index, item),
+    deleteItem: (index) => deleteItem('recipe', index)
+  };
   
   if (loading) {
     return <p className="loading">Loading...</p>;
@@ -80,35 +101,9 @@ function ManageRecipe(){
         <input className="w-5/12 md:w-1/4" type="number" name="servings" value={formData.servings} onChange={handleChange} placeholder="Servings" />
       </div>
 
-      <FormInput
-        formData={formData.equipment || []}
-        formDataName="Equipment"
-        inputValue={equipmentInput}
-        onInputChange={setEquipmentInput}
-        onAddItem={(value) => addItem('equipment', value)}
-        onEditItem={(index, value) => editItem('equipment', index, value)}
-        onDeleteItem={(index) => deleteItem('equipment', index)}
-      />
-
-      <FormInput
-        formData={formData.ingredients || []}
-        formDataName="Ingredient"
-        inputValue={ingredientInput}
-        onInputChange={setIngredientInput}
-        onAddItem={(value) => addItem('ingredients', value)}
-        onEditItem={(index, value) => editItem('ingredients', index, value)}
-        onDeleteItem={(index) => deleteItem('ingredients', index)}
-      />
-
-      <FormInput
-        formData={formData.recipe || []}
-        formDataName="Step"
-        inputValue={stepInput}
-        onInputChange={setStepInput}
-        onAddItem={(value) => addItem('steps', value)}
-        onEditItem={(index, value) => editItem('steps', index, value)}
-        onDeleteItem={(index) => deleteItem('steps', index)}
-      />
+      <FormInput formDataName="Equipment" handlers={equipmentHandlers} />
+      <FormInput formDataName="Ingredients" handlers={ingredientHandlers} />
+      <FormInput formDataName="Steps" handlers={recipeHandlers} />
 
       <div className="flex gap-3 mt-5">
         <button type="submit" className="button !bg-green-600 hover:!bg-green-800">

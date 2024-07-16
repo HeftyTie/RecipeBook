@@ -1,28 +1,31 @@
 import React, { useState } from "react";
 
-const FormInput = ({ formData, formDataName, inputValue, onInputChange, onAddItem, onEditItem, onDeleteItem }) => {
-  const [editIndex, setEditIndex] = useState(-1); 
+const FormInput = ({ formDataName, handlers }) => {
+  const [inputValue, setInputValue] = useState('');
+  const [editIndex, setEditIndex] = useState(-1);
+
+  const { formData, addItem, editItem, deleteItem } = handlers;
 
   const handleEdit = (index) => {
-    setEditIndex(index); 
-    onInputChange(formData[index]); 
+    setEditIndex(index);
+    setInputValue(formData[index]);
   };
 
   const handleUpdate = () => {
     if (inputValue.trim()) {
       if (editIndex !== -1) {
-        onEditItem(editIndex, inputValue); 
+        editItem(editIndex, inputValue);
       } else {
-        onAddItem(inputValue); 
+        addItem(inputValue);
       }
-      onInputChange(''); 
-      setEditIndex(-1); 
+      setInputValue('');
+      setEditIndex(-1);
     }
   };
 
   const handleDelete = (index) => {
-    onDeleteItem(index); 
-    setEditIndex(-1); 
+    deleteItem(index);
+    setEditIndex(-1);
   };
 
   return (
@@ -43,7 +46,7 @@ const FormInput = ({ formData, formDataName, inputValue, onInputChange, onAddIte
         <input
           type="text"
           value={inputValue}
-          onChange={(e) => onInputChange(e.target.value)}
+          onChange={(e) => setInputValue(e.target.value)}
           placeholder={formDataName}
           className="w-[60vw]"
         />
@@ -52,7 +55,7 @@ const FormInput = ({ formData, formDataName, inputValue, onInputChange, onAddIte
           type="button"
           onClick={handleUpdate}
         >
-          {editIndex === -1 ? 'Add' : 'Update'} 
+          {editIndex === -1 ? 'Add' : 'Update'}
         </button>
       </div>
     </>

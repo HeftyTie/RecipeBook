@@ -11,7 +11,7 @@ export const useFormData = (initialData) => {
     servings: '',
     equipment: [],
     ingredients: [],
-    steps: [],
+    recipe: [],
     image: null,
   });
 
