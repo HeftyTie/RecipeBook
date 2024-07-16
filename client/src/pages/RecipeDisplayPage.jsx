@@ -5,10 +5,9 @@ import { Link } from 'react-router-dom';
 import { useGetRequest, useDeleteRequest } from '@hooks/requests';
 import { useRedirectIfEmpty } from '@hooks/useRedirectIfEmpty';
 
-function Recipes() {
+function RecipeDisplay() {
   const { id } = useParams();
   const { data: recipe, loading } = useGetRequest(`api/recipe/${id}`);
-
   useRedirectIfEmpty(recipe, loading);
 
   const { deleteRecipe } = useDeleteRequest();
@@ -93,4 +92,4 @@ function Recipes() {
   );
 }
 
-export default Recipes;
+export default RecipeDisplay;

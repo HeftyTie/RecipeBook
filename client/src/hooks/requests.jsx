@@ -28,6 +28,50 @@ export const useGetRequest = (apiUrl) => {
   return { data, loading };
 } 
 
+export const usePostRequest = () => {
+  const postRecipe = async (formData) => {
+    try {
+      const response = await axios.post('/api/manage-recipe', formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        return { success: true, message: 'Recipe added successfully.' };
+      } else {
+        return { success: false, message: 'An error occurred. Please try again.' };
+      }
+    } catch (error) {
+      return { success: false, message: 'An error occurred. Please try again.' };
+    }
+  };
+
+  return { postRecipe };
+};
+
+export const usePutRequest = () => {
+  const putRecipe = async (formData) => {
+    try {
+      const response = await axios.put('/api/manage-recipe', formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        return { success: true, message: 'Recipe updated successfully.' };
+      } else {
+        return { success: false, message: 'An error occurred. Please try again.' };
+      }
+    } catch (error) {
+      return { success: false, message: 'An error occurred. Please try again.' };
+    }
+  };
+
+  return { putRecipe };
+};
+
 export const useDeleteRequest = () => {
   const deleteRecipe = async (passkey) => {
     try {

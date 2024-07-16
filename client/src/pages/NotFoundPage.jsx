@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function NoPage() {
+function NotFound() {
   return (
     <div className="flex flex-col gap-5 text-center align-center">
       <h1 className="text-5xl">404 - Resource not found</h1>
@@ -11,4 +11,4 @@ function NoPage() {
   );
 }
 
-export default NoPage;
+export default NotFound;
