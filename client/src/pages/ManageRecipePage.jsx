@@ -1,23 +1,20 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import FormInput from "@components/FormInput"
+import FormInput from "@components/FormInput";
 import { useFormData } from '@hooks/useFormData';
 import { useGetRequest, usePostRequest, usePutRequest } from '@hooks/requests';
 
-function ManageRecipe(){
+function ManageRecipe() {
   const { id } = useParams();
-  const { data, loading } = useGetRequest( `api/recipe/${id}`);
+  const { data, loading } = useGetRequest(id ? `api/recipe/${id}`: "");
 
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
 
   const { formData, setFormData, addItem, editItem, deleteItem, handleChange } = useFormData();
 
   const [buttonText, setButtonText] = useState("Add");
-  const [equipmentInput, setEquipmentInput] = useState('');
-  const [ingredientInput, setIngredientInput] = useState('');
-  const [stepInput, setStepInput] = useState('');
-  
+
   useEffect(() => {
     if (id && data) {
       setFormData({
@@ -33,18 +30,18 @@ function ManageRecipe(){
         recipe: data.recipe || []
       });
       setButtonText("Update");
-    } 
-  }, [data]);
+    }
+  }, [data, id, setFormData]);
 
   useEffect(() => {
     if (!loading && !data && id) {
       navigate("/not-found");
     }
-  }, [loading, data, id]);
+  }, [loading, data, id, navigate]);
 
-  const { postRecipe } =  usePostRequest();
+  const { postRecipe } = usePostRequest();
   const { putRecipe } = usePutRequest();
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let response;
@@ -53,6 +50,7 @@ function ManageRecipe(){
     } else {
       response = await postRecipe(formData);
     }
+    
     if (response.success) {
       alert(response.message);
       navigate('/');
@@ -62,26 +60,26 @@ function ManageRecipe(){
   };
 
   const equipmentHandlers = {
-    formData: formData.equipment || [],
+    formData: formData.equipment,
     addItem: (item) => addItem('equipment', item),
     editItem: (index, item) => editItem('equipment', index, item),
     deleteItem: (index) => deleteItem('equipment', index)
   };
 
   const ingredientHandlers = {
-    formData: formData.ingredients || [],
+    formData: formData.ingredients,
     addItem: (item) => addItem('ingredients', item),
     editItem: (index, item) => editItem('ingredients', index, item),
     deleteItem: (index) => deleteItem('ingredients', index)
   };
 
   const recipeHandlers = {
-    formData: formData.recipe || [],
+    formData: formData.recipe,
     addItem: (item) => addItem('recipe', item),
     editItem: (index, item) => editItem('recipe', index, item),
     deleteItem: (index) => deleteItem('recipe', index)
   };
-  
+
   if (loading) {
     return <p className="loading">Loading...</p>;
   }
@@ -93,11 +91,11 @@ function ManageRecipe(){
         <input type="text" name="author" value={formData.author} onChange={handleChange} placeholder="Username" />
         <input type="text" name="passkey" value={formData.passkey} onChange={handleChange} placeholder="Passkey" />
       </div>
-      
+
       <div className="flex flex-wrap justify-center gap-2 my-10">
-        <input className="w-5/12 md:w-1/4" type="number" name="prep_time" value={formData.prep_time} onChange={handleChange} placeholder="Prep Time (mins)" />          
-        <input className="w-5/12 md:w-1/4" type="number" name="cook_time" value={formData.cook_time} onChange={handleChange} placeholder="Cook Time (mins)" />  
-        <input className="w-5/12 md:w-1/4" type="number" name="total_time" value={formData.total_time} onChange={handleChange} placeholder="Total Time (mins)" />  
+        <input className="w-5/12 md:w-1/4" type="number" name="prep_time" value={formData.prep_time} onChange={handleChange} placeholder="Prep Time (mins)" />
+        <input className="w-5/12 md:w-1/4" type="number" name="cook_time" value={formData.cook_time} onChange={handleChange} placeholder="Cook Time (mins)" />
+        <input className="w-5/12 md:w-1/4" type="number" name="total_time" value={formData.total_time} onChange={handleChange} placeholder="Total Time (mins)" />
         <input className="w-5/12 md:w-1/4" type="number" name="servings" value={formData.servings} onChange={handleChange} placeholder="Servings" />
       </div>
 

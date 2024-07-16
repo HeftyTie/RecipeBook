@@ -7,17 +7,22 @@ export const useGetRequest = (apiUrl) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const baseUrl = import.meta.env.VITE_API_BASE_URL;
-        const response = await axios.get(`${baseUrl}/${apiUrl}`);
-        const { data, status } = response;
-
-        if (status === 200) {
-          setData(data); 
-        } 
-      } catch (error) {
-
-      } finally {
+      if (apiUrl) {
+        try {
+          const baseUrl = import.meta.env.VITE_API_BASE_URL;
+          const response = await axios.get(`${baseUrl}/${apiUrl}`);
+          const { data, status } = response;
+  
+          if (status === 200) {
+            setData(data); 
+          } 
+        } catch (error) {
+  
+        } finally {
+          setLoading(false);
+        }
+      }
+      else {
         setLoading(false);
       }
     };
@@ -31,19 +36,18 @@ export const useGetRequest = (apiUrl) => {
 export const usePostRequest = () => {
   const postRecipe = async (formData) => {
     try {
-      const response = await axios.post('/api/manage-recipe', formData, {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL;
+      const response = await axios.post(`${baseUrl}/api/manage-recipe`, formData, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         return { success: true, message: 'Recipe added successfully.' };
-      } else {
-        return { success: false, message: 'An error occurred. Please try again.' };
-      }
+      } 
     } catch (error) {
-      return { success: false, message: 'An error occurred. Please try again.' };
+      return { success: false, message: 'Missing inputs or an error occurred. Please try again.' };
     }
   };
 
@@ -53,7 +57,8 @@ export const usePostRequest = () => {
 export const usePutRequest = () => {
   const putRecipe = async (formData) => {
     try {
-      const response = await axios.put('/api/manage-recipe', formData, {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL;
+      const response = await axios.put(`${baseUrl}/api/manage-recipe/${formData.id}`, formData, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -61,11 +66,9 @@ export const usePutRequest = () => {
 
       if (response.status === 200) {
         return { success: true, message: 'Recipe updated successfully.' };
-      } else {
-        return { success: false, message: 'An error occurred. Please try again.' };
-      }
+      } 
     } catch (error) {
-      return { success: false, message: 'An error occurred. Please try again.' };
+      return { success: false, message: 'Missing inputs or an error occurred. Please try again.' };
     }
   };
 
@@ -73,23 +76,23 @@ export const usePutRequest = () => {
 };
 
 export const useDeleteRequest = () => {
-  const deleteRecipe = async (passkey) => {
+  const deleteRecipe = async (passkey, id) => {
     try {
-      const formData = { passkey }; 
-      const response = await axios.delete(`/api/manage-recipe`, {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL;
+      const response = await axios.delete(`${baseUrl}/api/manage-recipe/${id}`, {
         headers: {
           'Content-Type': 'application/json'
         },
-        data: formData
+        data: { passkey }
       });
 
-      if (response.status === 200) {
-          alert('Recipe deleted successfully.');
+      if (response.status === 204) {
+        return { success: true, message: 'Recipe deleted successfully.' };
       } else {
-          alert('Invalid Passkey');
+        return { success: false, message: 'An error occurred. Please try again.' };
       }
     } catch (error) {
-        alert('An error occurred. Please try again.');
+      return { success: false, message: 'An error occurred. Please try again.' };
     }
   };
 

@@ -9,10 +9,10 @@ function Home() {
       return <p className="loading">Loading...</p>;
   }
 
-  if(!recipes){
-    return(<h1 className="text-5xl">No recipes yet!</h1>);
+  if (recipes.length === 0) {
+    return(<h1 className="loading">No recipes yet!</h1>);
   }
-  
+
   const uniqueUsers = Array.from(
     new Set(recipes.map(recipeItem => recipeItem.author))
   );

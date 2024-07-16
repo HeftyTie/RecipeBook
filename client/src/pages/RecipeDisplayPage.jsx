@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -10,12 +10,20 @@ function RecipeDisplay() {
   const { data: recipe, loading } = useGetRequest(`api/recipe/${id}`);
   useRedirectIfEmpty(recipe, loading);
 
+  const navigate = useNavigate();
+
   const { deleteRecipe } = useDeleteRequest();
-  const handleInput = () => {
+  const handleInput = async () => {
     const input = prompt("Please enter your input:");
 
     if (input !== null) {
-      deleteRecipe(input);
+      const response = await deleteRecipe(input, id);
+      if (response.success) {
+        alert(response.message);
+        navigate('/');
+      } else {
+        alert(response.message);
+      }
     }
   };
   

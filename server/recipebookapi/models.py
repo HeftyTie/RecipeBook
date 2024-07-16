@@ -3,7 +3,6 @@ from django.db import models
 from django.utils import timezone
 
 class Recipes(models.Model):
-    id = models.IntegerField(primary_key=True)
     author = models.CharField(max_length=50)
     passkey = models.CharField(max_length=50)
     header = models.CharField(max_length=100)

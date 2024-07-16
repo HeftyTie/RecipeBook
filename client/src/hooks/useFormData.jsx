@@ -2,17 +2,16 @@ import { useState } from 'react';
 
 export const useFormData = (initialData) => {
   const [formData, setFormData] = useState(initialData || {
-    username: '',
+    author: '',
     passkey: '',
     header: '',
-    prepTime: '',
-    cookTime: '',
-    totalTime: '',
+    prep_time: '',
+    cook_time: '',
+    total_time: '',
     servings: '',
     equipment: [],
     ingredients: [],
-    recipe: [],
-    image: null,
+    recipe: []
   });
 
   const addItem = (property, value) => {
@@ -46,12 +45,23 @@ export const useFormData = (initialData) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let parsedValue = value;
+  
+    const integerFields = ['prep_time', 'cook_time', 'total_time', 'servings'];
+  
+    if (integerFields.includes(name)) {
+      parsedValue = parseInt(value, 10);
+      if (isNaN(parsedValue)) {
+        parsedValue = value;
+      }
+    }
+  
     setFormData(prevFormData => ({
       ...prevFormData,
-      [name]: value,
+      [name]: parsedValue,
     }));
   };
-
+  
   return {
     formData,
     setFormData,
