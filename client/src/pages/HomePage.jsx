@@ -5,6 +5,16 @@ import RecipeContainer from '@components/RecipesContainer';
 function Home() {
   const { data: recipes, loading } = useGetRequest('api/recipes');
 
+  const isHttps = window.location.href.startsWith('https');
+
+  if (isHttps) {
+    return (
+      <h1 className="loading">
+        HTTPS detected, server only runs on HTTP for demo. Consider switching to HTTP.
+      </h1>
+    );
+  }
+
   if (loading) {
       return <p className="loading">Loading...</p>;
   }
