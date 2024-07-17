@@ -6,6 +6,7 @@ This project is a simple recipe book website developed as part of a take-home as
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
+- [Architecture](#tech-stack)
 - [Setup Instructions](#setup-instructions)
 - [Deployment to AWS](#deployment-to-aws)
 - [Presentation](#presentation)
@@ -18,7 +19,7 @@ This project is a simple recipe book website developed as part of a take-home as
 
 # Tech Stack
 
-## Frontend:
+## Frontend
 
 - React.js
 - Vite
@@ -29,18 +30,20 @@ This project is a simple recipe book website developed as part of a take-home as
 - React router dom
 - React icons
 
-## Backend:
+## Backend
 
 - Django
 - Django REST Framework
 - django-cors-headers
 
-# Deployment:
+# Architecture
 
 - AWS S3 (Frontend)
 - AWS EC2 (Backend)
 - AWS CloudFront (CDN)
-- AWS VPC (Custom VPC with one private subnet)
+- AWS VPC (Custom VPC with one public subnet)
+
+![AWS network diagram](https://github.com/user-attachments/assets/fb21b154-c88e-49ff-aa93-14c750387992)
 
 # Setup Instructions
 
